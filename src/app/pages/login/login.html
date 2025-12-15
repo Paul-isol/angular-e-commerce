@@ -1,0 +1,23 @@
+<form class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+    <span class="text-rotate text-4xl">
+  <span class="justify-items-center">
+    <span>WELCOME!</span>
+    <span>SIGN IN</span>
+  </span>
+</span>
+  <fieldset class="fieldset">
+    <label class="label">Username</label>
+    <input type="text" class="input " placeholder="Username" [field]="loginForm.username" />
+    <app-form-error [control]="loginForm.username()"></app-form-error>
+  </fieldset>
+  <label class="fieldset">
+    <span class="label">Password</span>
+    <input type="password" class="input " placeholder="Password" [field]="loginForm.password" />
+    <app-form-error [control]="loginForm.password()"></app-form-error>
+  </label>
+
+  <button class="btn btn-neutral mt-4" type="submit" (click)="onSubmit($event)" [disabled]="isloading()">
+    {{ isloading() ? 'Logging in...' : 'Login' }}
+  </button>
+  <button class="btn btn-ghost mt-1" type="submit" routerLink="/register">Register</button>
+</form>

@@ -5,6 +5,9 @@
 /tmp
 /out-tsc
 /bazel-out
+*.spec.ts
+/test
+/tests
 
 # Node
 /node_modules

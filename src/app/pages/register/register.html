@@ -1,0 +1,33 @@
+<form class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+  <span class="text-rotate text-4xl">
+    <span class="justify-items-center">
+      <span>WELCOME!</span>
+      <span>SIGN-UP</span>
+    </span>
+  </span>
+
+  <fieldset class="fieldset">
+    <label class="label">Username</label>
+    <input
+      type="text"
+      class="input"
+      placeholder="Username"
+      [field]="registerForm.username"
+    />
+    <app-form-error [control]="registerForm.username()"></app-form-error>
+  </fieldset>
+  <fieldset class="fieldset">
+    <label class="label">Email</label>
+    <input type="email" class="input validator" [field]="registerForm.email" placeholder="Email" />
+    <app-form-error [control]="registerForm.email()"></app-form-error>
+  </fieldset>
+
+  <label class="fieldset">
+    <span class="label">Password</span>
+    <input type="password" class="input validator" placeholder="Password" [field]="registerForm.password" />
+    <app-form-error [control]="registerForm.password()"></app-form-error>
+  </label>
+
+  <button class="btn btn-neutral mt-4" type="submit" (click)="onSubmit($event)" [disabled]="registerForm().invalid()">REGISTER</button>
+  <button class="btn btn-ghost mt-1" type="submit" routerLink="/login">SIGN-IN</button>
+</form>
