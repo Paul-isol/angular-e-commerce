@@ -1,7 +1,11 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { email, Field, form, minLength, required, validate } from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
 import { FormError } from '../../shared/components/form-error';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { authFeatures } from '../../shared/store/auth-features';
+import { Store } from '@ngrx/store';
+import { authAction } from '../../shared/store/auth-action';
 
 @Component({
   selector: 'app-register',
@@ -18,6 +22,8 @@ export class Register {
     email: '',
     password: ''
   });
+  private readonly store = inject(Store);
+  protected readonly isLoading = toSignal(this.store.select(authFeatures.selectIsLoading))
   registerForm = form(this.registerModel, (rootpath) => {
     required(rootpath.username, {message: 'Username is required'});
     minLength(rootpath.username, 3, {message: 'Username must be at least 3 characters long'});
@@ -39,8 +45,10 @@ export class Register {
   });
   onSubmit(event: Event) {
     event.preventDefault();
+    const id = Math.floor(Math.random() * 10000);
+    const registerRequest = {id, ...this.registerForm().value()};
     if (this.registerForm().valid()) {
-      console.log('Registering user:', this.registerModel());
+      this.store.dispatch(authAction.register(registerRequest))
     } else {
       console.log('Form is invalid');
     }

@@ -6,7 +6,7 @@ export const authAction = createActionGroup({
     source: 'Auth',
     events: {
         login: props<{ username: string; password: string }>(),
-        loginSuccsess: props<{ token: string }>(),
+        loginSuccsess: props<{ token: string, userId: number|null }>(),
         loginFailure: props<{ error: any }>(),
         register: props<RegisterRequest>(),
         registerSuccess: emptyProps(),

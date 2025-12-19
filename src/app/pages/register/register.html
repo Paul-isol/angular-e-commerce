@@ -28,6 +28,8 @@
     <app-form-error [control]="registerForm.password()"></app-form-error>
   </label>
 
-  <button class="btn btn-neutral mt-4" type="submit" (click)="onSubmit($event)" [disabled]="registerForm().invalid()">REGISTER</button>
+  <button class="btn btn-neutral mt-4" type="submit" (click)="onSubmit($event)" [disabled]="registerForm().invalid()||isLoading()">
+    {{isLoading() ? 'LOADING...' : 'REGISTER'}}
+  </button>
   <button class="btn btn-ghost mt-1" type="submit" routerLink="/login">SIGN-IN</button>
 </form>

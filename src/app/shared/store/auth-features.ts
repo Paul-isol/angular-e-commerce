@@ -18,9 +18,11 @@ export const authFeatures = createFeature({
     reducer: createReducer(
         initialAuthState,
 
-        on(authAction.loginSuccsess, (state, { token})=>({
+        on(authAction.loginSuccsess, (state, { token, userId })=>({
             ...state,
-            token
+            userId,
+            token,
+            isLoading: false,
         })),
 
         on(authAction.loginFailure, (state, { error })=>({
