@@ -2,10 +2,12 @@ import { Routes } from '@angular/router';
 import { MainLayout } from './pages/main-layout';
 import { provideState } from '@ngrx/store';
 import { ProductFeatures } from './pages/products/store/product-feature';
-import { provideEffects } from '@ngrx/effects';
+import { createEffect, provideEffects } from '@ngrx/effects';
 import * as productEffect from './pages/products/store/product-effect';
 import { profileFeature } from './pages/profile/store/profile-feature';
 import * as profileEffcts  from './pages/profile/store/profile.effect';
+import { CartFeature } from './pages/cart/store/cart.feature';
+import * as cartEffect from './pages/cart/store/cart.effect';
 
 export const routes: Routes = [
   {
@@ -19,6 +21,7 @@ export const routes: Routes = [
   {
     path: '',
     loadComponent: () => import('./pages/main-layout').then((m) => m.MainLayout),
+    providers: [provideState(CartFeature), provideEffects(cartEffect)],
     children: [
         {
         path: '',

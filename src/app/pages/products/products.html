@@ -34,7 +34,7 @@
         </p>
         <div class="card-actions flex justify-between">
           <h2 class="flex font-semibold text-4xl text-black">${{ product.price }}</h2>
-          <button class="btn btn-success text-white">Add to Cart</button>
+          <button (click)="onAddToCart(product)" class="btn btn-success text-white">Add to Cart</button>
         </div>
       </div>
     </div>

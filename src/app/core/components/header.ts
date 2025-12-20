@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { LucideAngularModule, ShoppingCart, LogOut } from 'lucide-angular';
 import { RouterLink } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { CartFeature } from '../../pages/cart/store/cart.feature';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { DecimalPipe } from '@angular/common';
 @Component({
   selector: 'app-header',
-  imports: [LucideAngularModule, RouterLink],
+  imports: [LucideAngularModule, RouterLink, DecimalPipe],
   template: `
     <div class="navbar bg-base-100 shadow-sm">
       <div class="flex-1">
@@ -15,7 +19,7 @@ import { RouterLink } from '@angular/router';
             <div class="indicator">
               <lucide-icon [img]="icons.ShoppingCart" />
               
-              <span class="badge badge-sm indicator-item">8</span>
+              <span class="badge badge-sm indicator-item">{{cartCount()}}</span>
             </div>
           </div>
           <div
@@ -23,8 +27,8 @@ import { RouterLink } from '@angular/router';
             class="card card-compact dropdown-content bg-base-100 z-1 mt-3 w-52 shadow"
           >
             <div class="card-body">
-              <span class="text-lg font-bold">8 Items</span>
-              <span class="text-info">Subtotal: $999</span>
+              <span class="text-lg font-bold">{{cartCount()}} Items</span>
+              <span class="text-info">subtotal: $ {{cartTotal()| number: '1.0-3'}}</span>
               <div class="card-actions">
                 <button routerLink="/cart" class="btn btn-primary btn-block">
                 <lucide-icon [img]="icons.ShoppingCart" />
@@ -62,5 +66,8 @@ import { RouterLink } from '@angular/router';
   `,
 })
 export class Header {
-  protected readonly icons = {LogOut,ShoppingCart}
+  protected readonly icons = {LogOut,ShoppingCart};
+  private readonly store = inject(Store);
+  protected readonly cartCount = toSignal(this.store.select(CartFeature.selectCartCount));
+  protected readonly cartTotal = toSignal(this.store.select(CartFeature.selectCartTotal));
 }
